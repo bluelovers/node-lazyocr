@@ -1,0 +1,22 @@
+{
+  "name": "lazyocr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/bluebird": "^3.5.23",
+    "@types/fs-extra": "^5.0.4",
+    "bluebird": "^3.5.1",
+    "debug-color2": "^1.0.2",
+    "dotenv": "^6.0.0",
+    "fs-extra": "^7.0.0",
+    "moment": "^2.22.2",
+    "upath2": "^2.1.2",
+    "yarg": "^1.0.8"
+  }
+}
