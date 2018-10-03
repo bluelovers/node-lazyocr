@@ -1,7 +1,7 @@
 {
   "name": "lazyocr",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.0.2",
+  "description": "a cli for ocr , convert image to text",
   "homepage": "https://github.com/bluelovers/node-lazyocr#readme",
   "bugs": {
     "url": "https://github.com/bluelovers/node-lazyocr/issues"
