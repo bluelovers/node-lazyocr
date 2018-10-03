@@ -7,12 +7,7 @@ const crypto = require("crypto");
 const fs = require("fs-extra");
 const Promise = require("bluebird");
 const path = require("upath2");
-const debug_color2_1 = require("debug-color2");
-debug_color2_1.default.setOptions({
-    inspectOptions: {
-        colors: true,
-    },
-});
+const console_1 = require("./lib/console");
 //import moment = require('moment-timezone');
 const moment = require("moment");
 const baidu_aip_sdk_1 = require("baidu-aip-sdk");
@@ -62,7 +57,7 @@ class BaiduOcr {
         };
         this.eol = "\n";
         if (!APP_ID || !API_KEY || !SECRET_KEY) {
-            debug_color2_1.default.error({
+            console_1.default.error({
                 APP_ID,
                 API_KEY,
                 SECRET_KEY,
@@ -81,33 +76,33 @@ class BaiduOcr {
             let output;
             options = options || {};
             const disableCache = options && options.disableCache;
-            debug_color2_1.default.debug(`檢查 ${meta.pathData.base}`);
+            console_1.default.debug(`檢查 ${meta.pathData.base}`);
             if (disableCache) {
-                debug_color2_1.default.debug(`停用緩存功能`);
+                console_1.default.debug(`停用緩存功能`);
             }
             let date;
             let time_use = 0;
             if (meta.fileResolve) {
                 if (!disableCache && await fs.pathExists(cache_file)) {
-                    debug_color2_1.default.debug(`此檔案已經解析過了`);
+                    console_1.default.debug(`此檔案已經解析過了`);
                     let json = await fs.readJSON(cache_file);
                     let bool = json.meta.hash === meta.hash;
                     if (bool && options.overwrite) {
-                        debug_color2_1.default.debug(`配對成功，但強制覆寫`);
+                        console_1.default.debug(`配對成功，但強制覆寫`);
                     }
                     else if (bool) {
-                        debug_color2_1.default.debug(`配對成功，讀取緩存資料`);
+                        console_1.default.debug(`配對成功，讀取緩存資料`);
                         result = json.result;
                         output = await this.stringify(result);
                         time_use = json.time_use;
                         date = json.date ? moment(json.date) : moment();
                     }
                     else {
-                        debug_color2_1.default.warn(`配對失敗，重新處理檔案`);
+                        console_1.default.warn(`配對失敗，重新處理檔案`);
                     }
                 }
                 else {
-                    debug_color2_1.default.info(`開始處理 ${meta.pathData.base}`);
+                    console_1.default.info(`開始處理 ${meta.pathData.base}`);
                 }
             }
             if (!result) {
@@ -118,10 +113,10 @@ class BaiduOcr {
                 date = moment();
             }
             if (!result || !result.words_result_num) {
-                debug_color2_1.default.fail(`解析失敗，沒有分析到任何文字`);
+                console_1.default.fail(`解析失敗，沒有分析到任何文字`);
             }
             if (!disableCache && meta.fileResolve) {
-                debug_color2_1.default.debug(`寫入緩存資料`);
+                console_1.default.debug(`寫入緩存資料`);
                 await fs.writeFile(cache_txt, output);
                 await fs.writeJSON(cache_file, {
                     meta,
@@ -132,7 +127,7 @@ class BaiduOcr {
                     spaces: "\t",
                 });
             }
-            debug_color2_1.default.debug(`結束 ${meta.pathData.base}`);
+            console_1.default.debug(`結束 ${meta.pathData.base}`);
             return {
                 meta,
                 date,
@@ -147,7 +142,7 @@ class BaiduOcr {
         return Promise
             .resolve(buf)
             .tap(function () {
-            debug_color2_1.default.debug(`處理 Buffer 資料`);
+            console_1.default.debug(`處理 Buffer 資料`);
         })
             .then(function (buf) {
             return buf.toString("base64");
@@ -162,7 +157,7 @@ class BaiduOcr {
         return Promise
             .resolve(base64)
             .tap(function () {
-            debug_color2_1.default.debug(`開始傳送至伺服器`);
+            console_1.default.debug(`開始傳送至伺服器`);
         })
             .then(function (base64) {
             return self.client.accurateBasic(base64, self.options);
@@ -172,7 +167,7 @@ class BaiduOcr {
                 let err = new Error(`發生錯誤 ${JSON.stringify(result)}`);
                 return Promise.reject(Object.assign(err, result));
             }
-            debug_color2_1.default.debug(`伺服器分析已完成`, '耗時', Date.now() - ss, 'ms');
+            console_1.default.debug(`伺服器分析已完成`, '耗時', Date.now() - ss, 'ms');
         });
     }
     validResultError(result) {
@@ -183,13 +178,13 @@ class BaiduOcr {
     }
     validResult(result) {
         if (this.validResultError(result)) {
-            debug_color2_1.default.error(result);
+            console_1.default.error(result);
         }
         else if (!result) {
-            debug_color2_1.default.error(`result is ${typeof result}`);
+            console_1.default.error(`result is ${typeof result}`);
         }
         else if (!result.words_result_num || !result.words_result || !result.words_result.length) {
-            debug_color2_1.default.error(`result list is empty`);
+            console_1.default.error(`result list is empty`);
         }
         else {
             return true;

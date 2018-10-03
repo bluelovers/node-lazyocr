@@ -51,4 +51,6 @@ tests/temp*
 *.iml
 out
 gen
-/.env
+.env
+### git_ts_bin template
+bin/*.d.ts

@@ -2,21 +2,42 @@
   "name": "lazyocr",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/bluelovers/node-lazyocr#readme",
+  "bugs": {
+    "url": "https://github.com/bluelovers/node-lazyocr/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluelovers/node-lazyocr.git"
+  },
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
+  "bin": {
+    "lazyocr": "bin/lazyocr.js"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@types/bluebird": "^3.5.23",
-    "@types/fs-extra": "^5.0.4",
-    "bluebird": "^3.5.1",
-    "debug-color2": "^1.0.2",
+    "@types/bluebird": "^3",
+    "@types/fs-extra": "^5",
+    "@types/yargs": "^12",
+    "baidu-aip-sdk-ts": "^2.3.3",
+    "bluebird": "^3.5.2",
+    "cache-path": "^1.0.3",
+    "debug-color2": "^1.0.6",
     "dotenv": "^6.0.0",
-    "fs-extra": "^7.0.0",
+    "fast-glob": "^2.2.3",
+    "fs-extra": "^7",
     "moment": "^2.22.2",
     "upath2": "^2.1.2",
-    "yarg": "^1.0.8"
-  }
+    "update-notifier": "^2.5.0",
+    "yargs": "^12"
+  },
+  "devDependencies": {}
 }

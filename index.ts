@@ -6,13 +6,7 @@ import * as crypto from 'crypto';
 import * as fs from 'fs-extra';
 import Promise = require('bluebird');
 import * as path from 'upath2';
-
-import console from 'debug-color2';
-console.setOptions({
-	inspectOptions: {
-		colors: true,
-	},
-});
+import console from './lib/console';
 
 //import moment = require('moment-timezone');
 import moment = require('moment');
