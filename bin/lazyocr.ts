@@ -42,6 +42,7 @@ const argv = yargs
 	.option('pattern', {
 		alias: ['p'],
 		array: true,
+		default: [],
 	})
 	.option('cwd', {
 		string: true,
@@ -99,7 +100,10 @@ else
 //console.dir(argv);
 
 bluebird
-	.resolve(fg.async<string>(pattern, {
+	.resolve(fg.async<string>([
+		...pattern,
+		...argv.pattern,
+	], {
 		deep: argv.deep,
 		cwd,
 		onlyFiles: true,
